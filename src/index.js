@@ -10,8 +10,10 @@ import rootReducers from './redux/rootReducers';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 import rootSagas from './redux/rootSagas';
+import 'typeface-exo';
 
 import 'bootstrap/dist/css/bootstrap.css';
+import './styles/main.css';
 
 const sagaMiddleware = createSagaMiddleware();
 
