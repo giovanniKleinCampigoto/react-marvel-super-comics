@@ -5,15 +5,20 @@ import {
     Switch,
 } from "react-router-dom";
 
-import Dashboard from '../containers/Dashboard/Dashboard';
 import routePath from './constants';
+
+// Components
+import Dashboard from '../containers/Dashboard/Dashboard';
+import Layout from '../components/Layout/Layout';
 
 const Routes = () => (
     <Router>
-        <Switch>
-            <Route exact path={routePath.home} component={Dashboard} />
-            <Route exact path={routePath.dashboard} component={Dashboard} />
-        </Switch>
+        <Layout>
+            <Switch>
+                <Route exact path={routePath.home} component={Dashboard} />
+                <Route exact path={routePath.dashboard} component={Dashboard} />
+            </Switch>
+        </Layout>
     </Router>
 );
 

@@ -3,6 +3,9 @@ $body-color: #fff;
 
 $font-family-base: Exo, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
+// colors
+$bright-blue: #0e86ca;
+
 $theme-colors: (
-  "primary": #0e86ca,
+  "primary": $bright-blue
 );
