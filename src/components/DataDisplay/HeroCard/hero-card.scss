@@ -1,0 +1,52 @@
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
+
+.hero-card-wrapper {
+    display: inline-flex;
+    flex-direction: column;
+
+    margin: 1rem;
+    width: 8.5rem;
+
+    &:hover {
+        .hero-card {
+            background-image: linear-gradient(#ffd255, #261902 100%);
+            cursor: pointer;
+        }
+
+        .hero-card__image {
+            filter: sepia(1);
+            transition: all .3s;
+        }
+    } // &:hover
+
+    .hero-card {    
+        background-image: linear-gradient(#152a46, #03122b 100%);
+        padding: 0.3rem;
+        margin-bottom: .5rem;
+        box-shadow: 0 0 0.875rem $black;
+    
+        &__image {
+            width: 100%;
+        }
+
+        &__info {
+            display: flex;
+            flex-direction: column;
+
+            &--name {
+                font-weight: 700;
+                text-transform: uppercase;
+            }
+
+            &--more {
+                font-weight: 300;
+                text-transform: uppercase;
+                font-size: .7rem;
+            }
+        } // &__info
+    } // .hero-card
+} // .hero-card-wrapper
+
+

@@ -17,6 +17,7 @@ const Routes = () => (
             <Switch>
                 <Route exact path={routePath.home} component={Dashboard} />
                 <Route exact path={routePath.dashboard} component={Dashboard} />
+                <Route exact path={routePath.heroDetails} component={() => 'hero'} />
             </Switch>
         </Layout>
     </Router>

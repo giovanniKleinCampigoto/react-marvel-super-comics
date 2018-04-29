@@ -1,4 +1,4 @@
-import React, { Component, Fragment, } from 'react';
+import React, { Component, } from 'react';
 import {
     Collapse,
     Navbar,
@@ -7,10 +7,6 @@ import {
     Nav,
     NavItem,
     NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem
 } from 'reactstrap';
 
 import './custom-navbar.css'
