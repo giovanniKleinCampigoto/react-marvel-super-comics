@@ -1,211 +1,80 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { throttle, } from 'lodash';
 import { CharactersService, } from '../../services';
+import mockCharacters from '../../services/characters/mockCharacters';
 
 import HeroCard from '../../components/DataDisplay/HeroCard/HeroCard';
+import Icon from '../../components/DataDisplay/Icon/Icon';
+
 import './dashboard.css';
 
 class Dashboard extends Component {
+    constructor(props) {
+        super(props);
+
+        this.onScroll = throttle(this.onScroll, 600);
+    }
+
     state = {
-        characters: [
-            {
-                id: '1011334',
-                name: '3-D Man',
-                thumbnail: {
-                    path: 'http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784',
-                    extension: 'jpg'
-                },
-                comics: {
-                    available: 35
-                },
-            },
-            {
-                id: '1017100',
-                "name": "A-Bomb (HAS)",
-                thumbnail: {
-                    path: 'http://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16',
-                    extension: 'jpg'
-                },
-                comics: {
-                    available: 35
-                },
-            },
-            {
-                id: '1009144',
-                name: 'A.I.M.',
-                thumbnail: {
-                    path: 'http://i.annihil.us/u/prod/marvel/i/mg/6/20/52602f21f29ec',
-                    extension: 'jpg'
-                },
-                comics: {
-                    available: 35
-                },
-            },
-            {
-                id: '1010699',
-                "name": "Aaron Stack",
-                thumbnail: {
-                    path: 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available',
-                    extension: 'jpg'
-                },
-                comics: {
-                    available: 35
-                },
-            },
-            {
-                id: '1011334',
-                name: '3-D Man',
-                thumbnail: {
-                    path: 'http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784',
-                    extension: 'jpg'
-                },
-                comics: {
-                    available: 35
-                },
-            },
-            {
-                id: '1017100',
-                "name": "A-Bomb (HAS)",
-                thumbnail: {
-                    path: 'http://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16',
-                    extension: 'jpg'
-                },
-                comics: {
-                    available: 35
-                },
-            },
-            {
-                id: '1009144',
-                name: 'A.I.M.',
-                thumbnail: {
-                    path: 'http://i.annihil.us/u/prod/marvel/i/mg/6/20/52602f21f29ec',
-                    extension: 'jpg'
-                },
-                comics: {
-                    available: 35
-                },
-            },
-            {
-                id: '1010699',
-                "name": "Aaron Stack",
-                thumbnail: {
-                    path: 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available',
-                    extension: 'jpg'
-                },
-                comics: {
-                    available: 35
-                },
-            },{
-                id: '1011334',
-                name: '3-D Man',
-                thumbnail: {
-                    path: 'http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784',
-                    extension: 'jpg'
-                },
-                comics: {
-                    available: 35
-                },
-            },
-            {
-                id: '1017100',
-                "name": "A-Bomb (HAS)",
-                thumbnail: {
-                    path: 'http://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16',
-                    extension: 'jpg'
-                },
-                comics: {
-                    available: 35
-                },
-            },
-            {
-                id: '1009144',
-                name: 'A.I.M.',
-                thumbnail: {
-                    path: 'http://i.annihil.us/u/prod/marvel/i/mg/6/20/52602f21f29ec',
-                    extension: 'jpg'
-                },
-                comics: {
-                    available: 35
-                },
-            },
-            {
-                id: '1010699',
-                "name": "Aaron Stack",
-                thumbnail: {
-                    path: 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available',
-                    extension: 'jpg'
-                },
-                comics: {
-                    available: 35
-                },
-            },
-            {
-                id: '1011334',
-                name: '3-D Man',
-                thumbnail: {
-                    path: 'http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784',
-                    extension: 'jpg'
-                },
-                comics: {
-                    available: 35
-                },
-            },
-            {
-                id: '1017100',
-                "name": "A-Bomb (HAS)",
-                thumbnail: {
-                    path: 'http://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16',
-                    extension: 'jpg'
-                },
-                comics: {
-                    available: 35
-                },
-            },
-            {
-                id: '1009144',
-                name: 'A.I.M.',
-                thumbnail: {
-                    path: 'http://i.annihil.us/u/prod/marvel/i/mg/6/20/52602f21f29ec',
-                    extension: 'jpg'
-                },
-                comics: {
-                    available: 35
-                },
-            },
-            {
-                id: '1010699',
-                "name": "Aaron Stack",
-                thumbnail: {
-                    path: 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available',
-                    extension: 'jpg'
-                },
-                comics: {
-                    available: 35
-                },
-            },
-        ],
+        characters: {
+            isLoading: false,
+            offset: 0,
+            limit: 48,
+            items: [],
+            // items: mockCharacters,
+        }
     }
 
     componentDidMount() {
-        // this.getCharacters();
+        this.getCharacters();
+        window.addEventListener('scroll', this.onScroll, false); // << CREATE HOC FOR THIS
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.onScroll, false); // << CREATE HOC FOR THIS
+    }
+
+    onScroll = () => {
+        if (
+            (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500) &&
+            this.state.characters.items.length && !this.state.characters.isLoading
+        ) {
+            this.getCharacters();
+            console.log('getCharacters')
+        }
     }
 
     async getCharacters() {
-        const response = await CharactersService.getCharacters({ limit: 40 });
+        this.setState({
+            characters: {
+                ...this.state.characters,
+                isLoading: true,
+            }
+        });
+
+        const response = await CharactersService.getCharacters({ limit: this.state.characters.limit, offset: this.state.characters.offset, });
 
         this.setState({
-            characters: response.data.data.results.map(val => ({
-                name: val.name,
-                thumbnail: val.thumbnail,
-                comics: {
-                    available: val.comics.available,
-                },
-            })),
+            characters: {
+                ...this.state.characters,
+                isLoading: false,
+                offset: this.state.characters.offset + this.state.characters.limit,
+                items: this.state.characters.items.concat(
+                    ...response.data.data.results.map(val => ({
+                        name: val.name,
+                        thumbnail: val.thumbnail,
+                        comics: {
+                            available: val.comics.available,
+                        },
+                    }))
+                ),
+            },
         });
     }
 
     renderCharacters() {
-        return this.state.characters.map((val, index) => (
+        return this.state.characters.items.map((val, index) => (
             <HeroCard
                 key={index}
                 name={val.name}
@@ -217,8 +86,16 @@ class Dashboard extends Component {
 
     render() {
         return (
-            <div className="content-wrapper">
-                {this.renderCharacters()}
+            <div className="d-flex flex-column align-items-center">
+                <div className="content-wrapper">
+                    {this.renderCharacters()}
+                </div>
+                {this.state.characters.isLoading &&
+                    <Icon
+                        name="spinner9"
+                        margin="1rem 0 3rem 0"
+                        spin={this.state.characters.isLoading}
+                    />}
             </div>
         )
     }

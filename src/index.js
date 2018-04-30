@@ -5,7 +5,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 // REDUX
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware , } from 'redux';
+import { createStore, applyMiddleware, } from 'redux';
 import rootReducers from './redux/rootReducers';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
@@ -24,7 +24,9 @@ sagaMiddleware.run(rootSagas);
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        {/* <React.StrictMode> */}
+            <App />
+        {/* </React.StrictMode> */}
     </Provider>
     , document.getElementById('root'));
 registerServiceWorker();

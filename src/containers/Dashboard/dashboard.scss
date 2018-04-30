@@ -3,8 +3,10 @@
 @import "node_modules/bootstrap/scss/mixins";
 
 .content-wrapper {
+    
+
     margin: 0 auto;
-    width: 65.5rem;
+    width: 63.5rem;
 
     @media screen and (max-width: 330.98px) { 
         width: 100%;
@@ -13,9 +15,9 @@
         flex-direction: column;
     }
 
-     @media screen and (min-width: 331px) and (max-width: 480.98px) { width: 19rem;  }
-     @media screen and (min-width: 481px) and (max-width: 649.98px) { width: 28.5rem;  }
-     @media screen and (min-width: 650px) and (max-width: 800.98px) { width: 38rem;  }
-     @media screen and (min-width: 801px) and (max-width: 866.98px) { width: 39.3125rem;  }
-     @media screen and (min-width: 867px) and (max-width: 1230px) { width: 52.4375rem; }
+     @media screen and (min-width: 331px) and (max-width: 480.98px) { width: 21rem;  }
+     @media screen and (min-width: 481px) and (max-width: 649.98px) { width: 21.5rem;  }
+     @media screen and (min-width: 650px) and (max-width: 800.98px) { width: 32rem;  }
+     @media screen and (min-width: 801px) and (max-width: 866.98px) { width: 32.3125rem;  }
+     @media screen and (min-width: 867px) and (max-width: 1230px) { width: 42.4375rem; }
 }
