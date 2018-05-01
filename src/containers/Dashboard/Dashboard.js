@@ -21,13 +21,13 @@ class Dashboard extends Component {
             isLoading: false,
             offset: 0,
             limit: 48,
-            items: [],
-            // items: mockCharacters,
+            // items: [],
+            items: mockCharacters,
         }
     }
 
     componentDidMount() {
-        this.getCharacters();
+        // this.getCharacters();
         window.addEventListener('scroll', this.onScroll, false); // << CREATE HOC FOR THIS
     }
 
@@ -40,7 +40,7 @@ class Dashboard extends Component {
             (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500) &&
             this.state.characters.items.length && !this.state.characters.isLoading
         ) {
-            this.getCharacters();
+            // this.getCharacters();
             console.log('getCharacters')
         }
     }
@@ -94,7 +94,7 @@ class Dashboard extends Component {
                     <Icon
                         name="spinner9"
                         margin="1rem 0 3rem 0"
-                        spin={this.state.characters.isLoading}
+                        spin={true}
                     />}
             </div>
         )

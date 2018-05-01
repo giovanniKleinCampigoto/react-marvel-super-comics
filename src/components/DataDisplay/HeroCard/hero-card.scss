@@ -5,28 +5,49 @@
 .hero-card-wrapper {
     display: inline-flex;
     flex-direction: column;
-
-    margin: 1rem;
-    width: 8.5rem;
-
-    &:hover {
-        .hero-card {
-            background-image: linear-gradient(#ffd255, #261902 100%);
-            cursor: pointer;
-        }
-
-        .hero-card__image {
-            filter: sepia(1);
-            transition: all .3s;
-        }
-    } // &:hover
-
-    .hero-card {    
-        background-image: linear-gradient(#152a46, #03122b 100%);
-        padding: 0.3rem;
-        margin-bottom: .5rem;
-        box-shadow: 0 0 0.875rem $black;
+    align-items: center;
     
+    margin-bottom: 1rem;
+    width: 16.6%;
+
+    @include media-breakpoint-only(md) { 
+        width: 20%;
+    }
+
+    @include media-breakpoint-only(sm) { 
+        width: 33.33%;
+    }
+
+    @include media-breakpoint-only(xs) { 
+        width: 50%;
+    }
+
+    @media (max-width: 290px) { 
+        width: 100%;
+    }
+
+    .hero-card {
+        width: 8.5rem;
+
+        &:hover {
+            .hero-card__image-wrapper {
+                background-image: linear-gradient(#ffd255, #261902 100%);
+                cursor: pointer; 
+            }
+    
+            .hero-card__image {
+                filter: sepia(1);
+                transition: all .3s;
+            }
+        } // &:hover
+
+        &__image-wrapper {
+            background-image: linear-gradient(#152a46, #03122b 100%);
+            padding: 0.3rem;
+            margin-bottom: .5rem;
+            box-shadow: 0 0 0.875rem $black;
+        }
+
         &__image {
             width: 100%;
         }

@@ -1,9 +1,11 @@
+@import "../../../styles/variables";
+
 @import "node_modules/bootstrap/scss/functions";
 @import "node_modules/bootstrap/scss/variables";
 @import "node_modules/bootstrap/scss/mixins";
 
 .custom-icon {
-    fill: $gray-500;
+    fill: theme-color("golden");
 
     &--spin {
         animation: spin .6s linear infinite;

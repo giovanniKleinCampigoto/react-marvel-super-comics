@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import symbolDefs from '../../../images/icomoonSprites/symbolDefs.svg';
-import './icon.css'
+import './icon.css';
 
 const Icon = ({ name, height, width, margin, spin, }) => {
     const spinning = spin ? ' custom-icon--spin' : '';
