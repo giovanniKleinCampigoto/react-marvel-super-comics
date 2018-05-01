@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { throttle, } from 'lodash';
 import { CharactersService, } from '../../services';
 import mockCharacters from '../../services/characters/mockCharacters';
 
@@ -8,54 +7,34 @@ import HeroCard from '../../components/DataDisplay/HeroCard/HeroCard';
 import Icon from '../../components/DataDisplay/Icon/Icon';
 import InfiniteScroll from '../../components/Other/InfiniteScroll/InfiniteScroll';
 
+import { FETCH_CHARACTERS, } from '../../redux/characters/types';
+
 import './dashboard.css';
 
 class Dashboard extends Component {
-    state = {
-        characters: {
-            isLoading: false,
-            offset: 0,
-            limit: 48,
-            items: [],
-            // items: mockCharacters,
+    state = {}
+
+    componentDidMount() {
+        const { history, charactersReducer, } = this.props;
+
+        if (history.action !== 'POP' || !charactersReducer.characters.items.length) {
+            this.getCharacters(true);
         }
     }
 
-    componentDidMount() {
-        this.getCharacters();
-    }
+    getCharacters = async (resetReducer = false) => {
+        const { dispatch, } = this.props;
 
-    getCharacters = async () => {
-        console.log(this.state)
-        this.setState({
-            characters: {
-                ...this.state.characters,
-                isLoading: true,
-            }
-        });
-
-        const response = await CharactersService.getCharacters({ limit: this.state.characters.limit, offset: this.state.characters.offset, });
-
-        this.setState({
-            characters: {
-                ...this.state.characters,
-                isLoading: false,
-                offset: this.state.characters.offset + this.state.characters.limit,
-                items: this.state.characters.items.concat(
-                    ...response.data.data.results.map(val => ({
-                        name: val.name,
-                        thumbnail: val.thumbnail,
-                        comics: {
-                            available: val.comics.available,
-                        },
-                    }))
-                ),
-            },
+        dispatch({
+            type: FETCH_CHARACTERS.REQUEST,
+            resetReducer,
         });
     }
 
     renderCharacters() {
-        return this.state.characters.items.map((val, index) => (
+        const { charactersReducer } = this.props;
+
+        return charactersReducer.characters.items.map((val, index) => (
             <HeroCard
                 key={index}
                 name={val.name}
@@ -66,10 +45,12 @@ class Dashboard extends Component {
     }
 
     render() {
+        const props = this.props;
+
         return (
             <InfiniteScroll
-                isLoading={this.state.characters.isLoading}
-                dataLength={this.state.characters.items.length}
+                isLoading={props.charactersReducer.characters.isLoading}
+                dataLength={props.charactersReducer.characters.items.length}
                 onFetchData={this.getCharacters}
             >
                 {() => (
@@ -77,7 +58,7 @@ class Dashboard extends Component {
                         <div className="content-wrapper">
                             {this.renderCharacters()}
                         </div>
-                        {this.state.characters.isLoading &&
+                        {props.charactersReducer.characters.isLoading &&
                             <Icon
                                 name="spinner9"
                                 margin="1rem 0 3rem 0"
@@ -86,9 +67,13 @@ class Dashboard extends Component {
                         }
                     </div>
                 )}
-            </InfiniteScroll>            
+            </InfiniteScroll>
         )
     }
 }
 
-export default connect()(Dashboard);
+const mapStateToProps = state => ({
+    charactersReducer: state.charactersReducer,
+});
+
+export default connect(mapStateToProps)(Dashboard);

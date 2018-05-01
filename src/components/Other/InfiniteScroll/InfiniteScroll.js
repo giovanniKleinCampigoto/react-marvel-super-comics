@@ -23,7 +23,7 @@ class InfiniteScroll extends Component {
             this.props.dataLength && !this.props.isLoading
         ) {
             this.props.onFetchData();
-            console.log('onFetchData')
+            console.log('onScroll')
         }
     }
 
