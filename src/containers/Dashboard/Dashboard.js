@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { CharactersService, } from '../../services';
-import mockCharacters from '../../services/characters/mockCharacters';
 
-import HeroCard from '../../components/DataDisplay/HeroCard/HeroCard';
+import CatalogCardContainer from '../../components/DataDisplay/CatalogCard/CatalogCardContainer';
+import CatalogCard from '../../components/DataDisplay/CatalogCard/CatalogCard';
 import Icon from '../../components/DataDisplay/Icon/Icon';
 import InfiniteScroll from '../../components/Other/InfiniteScroll/InfiniteScroll';
 
 import { FETCH_CHARACTERS, } from '../../redux/characters/types';
-
-import './dashboard.css';
 
 class Dashboard extends Component {
     state = {}
@@ -34,14 +31,20 @@ class Dashboard extends Component {
     renderCharacters() {
         const { charactersReducer } = this.props;
 
-        return charactersReducer.characters.items.map((val, index) => (
-            <HeroCard
-                key={index}
-                name={val.name}
-                imageSrc={`${val.thumbnail.path}/portrait_fantastic.${val.thumbnail.extension}`}
-                comics={val.comics}
-            />
-        ));
+        return charactersReducer.characters.items
+            .map((val, index) => (
+                <CatalogCard
+                    key={index}
+                    name={val.name}
+                    catalogSystem={true}
+                    fixedSize={true}
+                    imageSrc={val.thumbnail.path}
+                    portrait="uncanny"
+                    imgExtension={val.thumbnail.extension}
+                    comics={val.comics}
+                    redirectTo={`/hero/${val.id}`}
+                />
+            ));
     }
 
     render() {
@@ -55,9 +58,10 @@ class Dashboard extends Component {
             >
                 {() => (
                     <div className="d-flex flex-column align-items-center">
-                        <div className="content-wrapper">
+                        <CatalogCardContainer>
                             {this.renderCharacters()}
-                        </div>
+                        </CatalogCardContainer>
+
                         {props.charactersReducer.characters.isLoading &&
                             <Icon
                                 name="spinner9"

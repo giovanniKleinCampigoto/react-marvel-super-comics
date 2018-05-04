@@ -31,6 +31,7 @@ const reducer = (state = INITIAL_STATE, action) => {
                     offset: state.characters.offset + state.characters.limit,
                     items: state.characters.items.concat(
                         ...action.characters.map(val => ({
+                            id: val.id,
                             name: val.name,
                             thumbnail: val.thumbnail,
                             comics: {

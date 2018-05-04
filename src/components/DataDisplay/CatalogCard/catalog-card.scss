@@ -2,40 +2,47 @@
 @import "node_modules/bootstrap/scss/variables";
 @import "node_modules/bootstrap/scss/mixins";
 
-.hero-card-wrapper {
+.catalog-card-wrapper {
     display: inline-flex;
     flex-direction: column;
     align-items: center;
     
     margin-bottom: 1rem;
-    width: 16.6%;
 
-    @include media-breakpoint-only(md) { 
-        width: 20%;
+    width: 100%;
+
+    &__catalog-width {
+        width: 16.6%;
+
+        @include media-breakpoint-only(md) { 
+            width: 20%;
+        }
+
+        @include media-breakpoint-only(sm) { 
+            width: 33.33%;
+        }
+
+        @include media-breakpoint-only(xs) { 
+            width: 50%;
+        }
+
+        @media (max-width: 290px) { 
+            width: 100%;
+        }
     }
 
-    @include media-breakpoint-only(sm) { 
-        width: 33.33%;
-    }
-
-    @include media-breakpoint-only(xs) { 
-        width: 50%;
-    }
-
-    @media (max-width: 290px) { 
-        width: 100%;
-    }
-
-    .hero-card {
-        width: 8.5rem;
+    .catalog-card {        
+        &__fixed-size {
+            width: 8.5rem;
+        }
 
         &:hover {
-            .hero-card__image-wrapper {
+            .catalog-card__image-wrapper {
                 background-image: linear-gradient(#ffd255, #261902 100%);
                 cursor: pointer; 
             }
     
-            .hero-card__image {
+            .catalog-card__image {
                 filter: sepia(1);
                 transition: all .3s;
             }
@@ -67,7 +74,7 @@
                 font-size: .7rem;
             }
         } // &__info
-    } // .hero-card
-} // .hero-card-wrapper
+    } // .catalog-card
+} // .catalog-card-wrapper
 
 

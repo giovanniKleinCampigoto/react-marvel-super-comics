@@ -1,8 +1,9 @@
 const mockData = () => {
     let data = [];
 
-    for (let i = 0; i <= 6; i++) {
-        data = [...data, 
+    for (let i = 0; i <= 10; i++) {
+        data = [
+            ...data,
             {
                 id: '1011334',
                 name: '3-D Man',
@@ -44,7 +45,7 @@ const mockData = () => {
                     extension: 'jpg'
                 },
                 comics: {
-                    available: 35
+                    available: 35,
                 },
             },
         ]
